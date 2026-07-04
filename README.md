@@ -22,9 +22,9 @@ The primary goal of this project is to build a complete, production-style data p
 | **Microsoft Fabric** | Core unified platform for data engineering, warehousing, and analytics |
 | **OneLake** | Unified storage layer ("OneDrive for data") for all organizational data |
 | **Data Factory (Pipelines)** | Orchestrates data movement from Lakehouse to Data Warehouse |
-| **SQL** | Data validation, cleaning (nulls/duplicates), and querying the SQL analytics endpoint |
+| **SQL (T-SQL)** | Data validation, cleaning (nulls/duplicates), and querying the SQL analytics endpoint |
 | **Power BI** | Semantic modeling and interactive visualization layer |
-| **Python (PySpark)** | Notebook-based data engineering and data science tasks within Fabric |
+| **Python (Jupyter Notebook)** | Local exploratory data analysis (EDA) and SQL query testing/validation, using imported data outside the Fabric pipeline |
 | **Azure Data Lake Storage (ADLS) Gen2** | Underlying storage engine for the Lakehouse and Warehouse |
 
 ---
@@ -91,14 +91,28 @@ The dataset contains approximately **197,430 rows** of Swiggy order data coverin
 
 ---
 
+## 📝 Notes on Tooling
+
+While the core pipeline (ingestion, transformation, warehousing, and visualization) was built entirely within Microsoft Fabric, two supplementary **Jupyter Notebooks** were used locally (outside Fabric, with imported data) for:
+- **Exploratory Data Analysis (EDA)** — checking data distributions, nulls, and general data quality before pipeline design.
+- **SQL Query Testing** — validating and iterating on query logic prior to running it against the Fabric SQL analytics endpoint.
+
+These notebooks were used as a local development aid and are not part of the production pipeline.
+
+---
+
 ## 📂 Project Structure
 
 ```
 swiggy-sales-analysis/
 ├── data/                  # Raw CSV source data
-├── notebooks/             # PySpark notebooks for data engineering
-├── sql/                   # T-SQL scripts for cleaning & transformation
-├── pipelines/             # Data Factory pipeline definitions
+├── notebooks/
+│   ├── eda.ipynb          # Local exploratory data analysis (Jupyter)
+│   └── sql_testing.ipynb  # Local SQL query testing/validation (Jupyter)
+├── pipelines/
+│   ├── Pipeline_load_data_from_files_to_tables.json  # Bronze: CSV → Lakehouse Delta tables
+│   ├── pipeline_lw_to_dw.json                         # Silver/Gold: Lakehouse → Data Warehouse
+│   └── README.md                                      # Explanation of each pipeline
 ├── powerbi/               # Power BI report (.pbix) and semantic model
 ├── docs/                  # Architecture diagrams & documentation
 └── README.md
