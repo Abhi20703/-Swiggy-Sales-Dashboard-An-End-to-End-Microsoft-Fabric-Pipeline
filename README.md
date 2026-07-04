@@ -113,8 +113,7 @@ swiggy-sales-analysis/
 │   ├── Pipeline_load_data_from_files_to_tables.json  # Bronze: CSV → Lakehouse Delta tables
 │   ├── pipeline_lw_to_dw.json                         # Silver/Gold: Lakehouse → Data Warehouse
 │   └── README.md                                      # Explanation of each pipeline
-├── powerbi/               # Power BI report (.pbix) and semantic model
-├── docs/                  # Architecture diagrams & documentation
+├── powerbi/               # Power BI report (.pbix)               
 └── README.md
 ```
 
