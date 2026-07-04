@@ -1,0 +1,112 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "swiggy_lw": {
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "name": "Pipeline_load_data_from_files_to_tables",
+            "type": "pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy data dim_dish",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "typeProperties": {
+                            "source": {
+                                "type": "DelimitedTextSource",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageReadSettings",
+                                    "recursive": true,
+                                    "enablePartitionDiscovery": false
+                                },
+                                "formatSettings": {
+                                    "type": "DelimitedTextReadSettings"
+                                },
+                                "datasetSettings": {
+                                    "annotations": [],
+                                    "linkedService": {
+                                        "name": "swiggy_lw",
+                                        "properties": {
+                                            "annotations": [],
+                                            "type": "Lakehouse",
+                                            "typeProperties": {
+                                                "workspaceId": "<workspace-id-redacted>",
+                                                "artifactId": "[parameters('swiggy_lw')]",
+                                                "rootFolder": "Files"
+                                            }
+                                        }
+                                    },
+                                    "type": "DelimitedText",
+                                    "typeProperties": {
+                                        "location": {
+                                            "type": "LakehouseLocation",
+                                            "fileName": "dim_dish.csv",
+                                            "folderPath": "data"
+                                        },
+                                        "columnDelimiter": ",",
+                                        "escapeChar": "\\",
+                                        "firstRowAsHeader": true,
+                                        "quoteChar": "\""
+                                    },
+                                    "schema": []
+                                }
+                            },
+                            "sink": {
+                                "type": "LakehouseTableSink",
+                                "tableActionOption": "Append",
+                                "partitionOption": "None",
+                                "applyVOrder": false,
+                                "datasetSettings": {
+                                    "annotations": [],
+                                    "linkedService": {
+                                        "name": "swiggy_lw",
+                                        "properties": {
+                                            "annotations": [],
+                                            "type": "Lakehouse",
+                                            "typeProperties": {
+                                                "workspaceId": "<workspace-id-redacted>",
+                                                "artifactId": "[parameters('swiggy_lw')]",
+                                                "rootFolder": "Tables"
+                                            }
+                                        }
+                                    },
+                                    "type": "LakehouseTable",
+                                    "schema": [],
+                                    "typeProperties": {
+                                        "table": "dim_dish_new"
+                                    }
+                                }
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        }
+                    }
+                ],
+                "lastModifiedByObjectId": "<object-id-redacted>",
+                "lastPublishTime": "2026-06-28T14:03:19Z"
+            },
+            "dependsOn": []
+        }
+    ]
+}

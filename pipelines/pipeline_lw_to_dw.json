@@ -1,0 +1,397 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "swiggy_lw": {
+            "type": "string"
+        },
+        "swiggy_dw": {
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "name": "pipeline_lw_to_dw",
+            "type": "pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy data dim_date",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "typeProperties": {
+                            "source": {
+                                "type": "LakehouseTableSource",
+                                "datasetSettings": {
+                                    "annotations": [],
+                                    "linkedService": {
+                                        "name": "swiggy_lw",
+                                        "properties": {
+                                            "annotations": [],
+                                            "type": "Lakehouse",
+                                            "typeProperties": {
+                                                "workspaceId": "<workspace-id-redacted>",
+                                                "artifactId": "[parameters('swiggy_lw')]",
+                                                "rootFolder": "Tables"
+                                            }
+                                        }
+                                    },
+                                    "type": "LakehouseTable",
+                                    "schema": [],
+                                    "typeProperties": {
+                                        "table": "dim_date"
+                                    }
+                                }
+                            },
+                            "sink": {
+                                "type": "DataWarehouseSink",
+                                "allowCopyCommand": true,
+                                "copyCommandSettings": {},
+                                "writeBehavior": "Insert",
+                                "tableOption": "autoCreate",
+                                "datasetSettings": {
+                                    "annotations": [],
+                                    "linkedService": {
+                                        "name": "swiggy_dw",
+                                        "properties": {
+                                            "annotations": [],
+                                            "type": "DataWarehouse",
+                                            "typeProperties": {
+                                                "endpoint": "<datawarehouse-endpoint-redacted>.datawarehouse.fabric.microsoft.com",
+                                                "artifactId": "[parameters('swiggy_dw')]",
+                                                "workspaceId": "<workspace-id-redacted>"
+                                            }
+                                        }
+                                    },
+                                    "type": "DataWarehouseTable",
+                                    "schema": [],
+                                    "typeProperties": {
+                                        "schema": "swiggy_project",
+                                        "table": "dim_date"
+                                    }
+                                }
+                            },
+                            "enableStaging": true,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "Copy data dim_location",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "typeProperties": {
+                            "source": {
+                                "type": "LakehouseTableSource",
+                                "datasetSettings": {
+                                    "annotations": [],
+                                    "linkedService": {
+                                        "name": "swiggy_lw",
+                                        "properties": {
+                                            "annotations": [],
+                                            "type": "Lakehouse",
+                                            "typeProperties": {
+                                                "workspaceId": "<workspace-id-redacted>",
+                                                "artifactId": "[parameters('swiggy_lw')]",
+                                                "rootFolder": "Tables"
+                                            }
+                                        }
+                                    },
+                                    "type": "LakehouseTable",
+                                    "schema": [],
+                                    "typeProperties": {
+                                        "table": "dim_location"
+                                    }
+                                }
+                            },
+                            "sink": {
+                                "type": "DataWarehouseSink",
+                                "allowCopyCommand": true,
+                                "copyCommandSettings": {},
+                                "writeBehavior": "Insert",
+                                "tableOption": "autoCreate",
+                                "datasetSettings": {
+                                    "annotations": [],
+                                    "linkedService": {
+                                        "name": "swiggy_dw",
+                                        "properties": {
+                                            "annotations": [],
+                                            "type": "DataWarehouse",
+                                            "typeProperties": {
+                                                "endpoint": "<datawarehouse-endpoint-redacted>.datawarehouse.fabric.microsoft.com",
+                                                "artifactId": "[parameters('swiggy_dw')]",
+                                                "workspaceId": "<workspace-id-redacted>"
+                                            }
+                                        }
+                                    },
+                                    "type": "DataWarehouseTable",
+                                    "schema": [],
+                                    "typeProperties": {
+                                        "schema": "swiggy_project",
+                                        "table": "dim_location"
+                                    }
+                                }
+                            },
+                            "enableStaging": true,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "Copy data dim_dish",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "typeProperties": {
+                            "source": {
+                                "type": "LakehouseTableSource",
+                                "datasetSettings": {
+                                    "annotations": [],
+                                    "linkedService": {
+                                        "name": "swiggy_lw",
+                                        "properties": {
+                                            "annotations": [],
+                                            "type": "Lakehouse",
+                                            "typeProperties": {
+                                                "workspaceId": "<workspace-id-redacted>",
+                                                "artifactId": "[parameters('swiggy_lw')]",
+                                                "rootFolder": "Tables"
+                                            }
+                                        }
+                                    },
+                                    "type": "LakehouseTable",
+                                    "schema": [],
+                                    "typeProperties": {
+                                        "table": "dim_dish"
+                                    }
+                                }
+                            },
+                            "sink": {
+                                "type": "DataWarehouseSink",
+                                "allowCopyCommand": true,
+                                "copyCommandSettings": {},
+                                "writeBehavior": "Insert",
+                                "tableOption": "autoCreate",
+                                "datasetSettings": {
+                                    "annotations": [],
+                                    "linkedService": {
+                                        "name": "swiggy_dw",
+                                        "properties": {
+                                            "annotations": [],
+                                            "type": "DataWarehouse",
+                                            "typeProperties": {
+                                                "endpoint": "<datawarehouse-endpoint-redacted>.datawarehouse.fabric.microsoft.com",
+                                                "artifactId": "[parameters('swiggy_dw')]",
+                                                "workspaceId": "<workspace-id-redacted>"
+                                            }
+                                        }
+                                    },
+                                    "type": "DataWarehouseTable",
+                                    "schema": [],
+                                    "typeProperties": {
+                                        "schema": "swiggy_project",
+                                        "table": "dim_dish"
+                                    }
+                                }
+                            },
+                            "enableStaging": true,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "Copy data dim_restaurant",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "typeProperties": {
+                            "source": {
+                                "type": "LakehouseTableSource",
+                                "datasetSettings": {
+                                    "annotations": [],
+                                    "linkedService": {
+                                        "name": "swiggy_lw",
+                                        "properties": {
+                                            "annotations": [],
+                                            "type": "Lakehouse",
+                                            "typeProperties": {
+                                                "workspaceId": "<workspace-id-redacted>",
+                                                "artifactId": "[parameters('swiggy_lw')]",
+                                                "rootFolder": "Tables"
+                                            }
+                                        }
+                                    },
+                                    "type": "LakehouseTable",
+                                    "schema": [],
+                                    "typeProperties": {
+                                        "table": "dim_restaurant"
+                                    }
+                                }
+                            },
+                            "sink": {
+                                "type": "DataWarehouseSink",
+                                "allowCopyCommand": true,
+                                "copyCommandSettings": {},
+                                "writeBehavior": "Insert",
+                                "tableOption": "autoCreate",
+                                "datasetSettings": {
+                                    "annotations": [],
+                                    "linkedService": {
+                                        "name": "swiggy_dw",
+                                        "properties": {
+                                            "annotations": [],
+                                            "type": "DataWarehouse",
+                                            "typeProperties": {
+                                                "endpoint": "<datawarehouse-endpoint-redacted>.datawarehouse.fabric.microsoft.com",
+                                                "artifactId": "[parameters('swiggy_dw')]",
+                                                "workspaceId": "<workspace-id-redacted>"
+                                            }
+                                        }
+                                    },
+                                    "type": "DataWarehouseTable",
+                                    "schema": [],
+                                    "typeProperties": {
+                                        "schema": "swiggy_project",
+                                        "table": "dim_restaurant"
+                                    }
+                                }
+                            },
+                            "enableStaging": true,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "Copy data fact_orders",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "0.12:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "typeProperties": {
+                            "source": {
+                                "type": "LakehouseTableSource",
+                                "datasetSettings": {
+                                    "annotations": [],
+                                    "linkedService": {
+                                        "name": "swiggy_lw",
+                                        "properties": {
+                                            "annotations": [],
+                                            "type": "Lakehouse",
+                                            "typeProperties": {
+                                                "workspaceId": "<workspace-id-redacted>",
+                                                "artifactId": "[parameters('swiggy_lw')]",
+                                                "rootFolder": "Tables"
+                                            }
+                                        }
+                                    },
+                                    "type": "LakehouseTable",
+                                    "schema": [],
+                                    "typeProperties": {
+                                        "table": "fact_orders"
+                                    }
+                                }
+                            },
+                            "sink": {
+                                "type": "DataWarehouseSink",
+                                "allowCopyCommand": true,
+                                "copyCommandSettings": {},
+                                "writeBehavior": "Insert",
+                                "tableOption": "autoCreate",
+                                "datasetSettings": {
+                                    "annotations": [],
+                                    "linkedService": {
+                                        "name": "swiggy_dw",
+                                        "properties": {
+                                            "annotations": [],
+                                            "type": "DataWarehouse",
+                                            "typeProperties": {
+                                                "endpoint": "<datawarehouse-endpoint-redacted>.datawarehouse.fabric.microsoft.com",
+                                                "artifactId": "[parameters('swiggy_dw')]",
+                                                "workspaceId": "<workspace-id-redacted>"
+                                            }
+                                        }
+                                    },
+                                    "type": "DataWarehouseTable",
+                                    "schema": [],
+                                    "typeProperties": {
+                                        "schema": "swiggy_project",
+                                        "table": "fact_orders"
+                                    }
+                                }
+                            },
+                            "enableStaging": true,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        }
+                    }
+                ],
+                "lastModifiedByObjectId": "<object-id-redacted>",
+                "lastPublishTime": "2026-06-28T14:39:04Z"
+            },
+            "dependsOn": []
+        }
+    ]
+}
