@@ -146,6 +146,12 @@ swiggy-sales-analysis/
 - Ranking of top restaurant partners by sales volume and revenue.
 
 ---
+## 📸 Dashboard Preview
+
+![Power BI Dashboard]
+
+*Interactive Power BI dashboard showing sales trends, KPIs, and geographic performance.*
+---
 
 ## 📜 License
 
