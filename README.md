@@ -22,7 +22,7 @@ The primary goal of this project is to build a complete, production-style data p
 | **Microsoft Fabric** | Core unified platform for data engineering, warehousing, and analytics |
 | **OneLake** | Unified storage layer ("OneDrive for data") for all organizational data |
 | **Data Factory (Pipelines)** | Orchestrates data movement from Lakehouse to Data Warehouse |
-| **SQL ** | Data validation, cleaning (nulls/duplicates), and querying the SQL analytics endpoint |
+| **SQL** | Data validation, cleaning (nulls/duplicates), and querying the SQL analytics endpoint |
 | **Power BI** | Semantic modeling and interactive visualization layer |
 | **Python (PySpark)** | Notebook-based data engineering and data science tasks within Fabric |
 | **Azure Data Lake Storage (ADLS) Gen2** | Underlying storage engine for the Lakehouse and Warehouse |
