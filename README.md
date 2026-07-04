@@ -148,7 +148,7 @@ swiggy-sales-analysis/
 ---
 ## 📸 Dashboard Preview
 
-![Power BI Dashboard]
+![Power BI Dashboard](https://github.com/Abhi20703/-Swiggy-Sales-Dashboard-An-End-to-End-Microsoft-Fabric-Pipeline/blob/main/power%20bi/Swiggy%20Dashboard.png)
 
 *Interactive Power BI dashboard showing sales trends, KPIs, and geographic performance.*
 ---
